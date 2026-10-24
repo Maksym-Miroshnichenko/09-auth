@@ -28,23 +28,28 @@ export default function NotesClient({ tag }: Props) {
     setQuery(value);
     setPage(1);
   }, 300);
+  
+  const notes = data?.notes ?? [];
+  const totalPages = data?.totalPages ?? 1;
 
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox onSearch={handleSearch} />
-        {(data?.totalPages ?? 1) > 1 && (
-          <Pagination
-            currentPage={page}
-            totalPages={data?.totalPages ?? 1}
-            onPageChange={(selectedIndex) => setPage(selectedIndex + 1)}
-          />
-        )}
         <Link href="/notes/action/create" className={css.button}>
-          Create note
+          Create note +
         </Link>
       </header>
-      <NoteList notes={data?.notes ?? []} />
+
+      {notes.length > 0 && <NoteList notes={notes} />}
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(selectedIndex) => setPage(selectedIndex + 1)}
+        />
+      )}
     </div>
   );
 }

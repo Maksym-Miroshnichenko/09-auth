@@ -22,7 +22,7 @@ export async function proxy(request: NextRequest) {
 
       if (setCookie) {
         const target = isPublicRoute
-          ? NextResponse.redirect(new URL('/profile', request.url))
+          ? NextResponse.redirect(new URL('/', request.url))
           : NextResponse.next();
 
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
@@ -46,7 +46,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isPublicRoute) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
